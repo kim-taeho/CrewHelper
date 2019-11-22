@@ -39,6 +39,10 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
+THIRD_PARTY_APPS = [
+    "django_seed"
+]
+
 PROJECT_APPS = [
     "core.apps.CoreConfig",
     "users.apps.UsersConfig",
@@ -47,7 +51,7 @@ PROJECT_APPS = [
     "apply.apps.ApplyConfig",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -125,3 +129,8 @@ STATIC_URL = "/static/"
 
 # User
 AUTH_USER_MODEL = "users.User"
+
+# Static
+STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
