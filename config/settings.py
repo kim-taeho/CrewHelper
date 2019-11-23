@@ -49,6 +49,7 @@ PROJECT_APPS = [
     "projects.apps.ProjectsConfig",
     "conversations.apps.ConversationsConfig",
     "apply.apps.ApplyConfig",
+    "lists.apps.ListsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS

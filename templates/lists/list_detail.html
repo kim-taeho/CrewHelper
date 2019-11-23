@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block page_title %}
+    {{user.first_name}}'s Favs.
+{% endblock page_title %}
+
+{% block content %}
+
+    <h3 class="mb-12 text-2xl text-center">Favourite Projects</h3>    
+
+        <div class="container mx-auto pb-10">
+            <div class="flex flex-wrap -mx-40 mt-10">
+                {% for project in user.list.projects.all %}
+                    {% include "partials/project_card.html" with project=project %}
+                {% endfor %}
+        </div>
+    </div>
+    
+
+{% endblock content %}

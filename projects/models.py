@@ -58,6 +58,11 @@ class Project(core_models.TimeStampedModel):
         except ValueError:
             return None
 
+    def get_members(self):
+        num = self.members.count()
+        return num
+        
+
 
 class ProjectJob(core_models.TimeStampedModel):
 

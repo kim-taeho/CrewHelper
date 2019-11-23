@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load on_mar %}
 
 {% block page_title %}
     HOME
@@ -12,7 +13,10 @@
         
         <div class="flex flex-wrap -mx-40 mt-10">
             {% for project in projects %}
-                {% include "partials/project_card.html" with project=project %}
+                {% on_mar project as on_mar_bool %}
+                {% if on_mar_bool %}
+                    {% include "partials/project_card.html" with project=project %}
+                {% endif %}
             {% endfor %}
         </div>
 
