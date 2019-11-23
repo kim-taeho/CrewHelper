@@ -23,7 +23,14 @@ class ProjectJobAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "start", "due", "charger", "project", "is_finished")},
+            {
+                "fields": (
+                    "name", 
+                    "start", 
+                    "due", 
+                    "charger", 
+                    "project", 
+                    )},
         ),
     )
 

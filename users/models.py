@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 from django.db import models
 from core import models as core_models
 
@@ -156,4 +157,8 @@ class User(AbstractUser):
     bio = models.TextField(default="")
     major = models.CharField(choices=MAJOR_CHOICES, max_length=20, blank=True)
     login_method = models.CharField(choices=LOGIN_CHOICES, max_length=50, default=LOGIN_EMAIL)
+
+    def get_absolute_url(self):
+        return reverse("users:profile", kwargs={"pk": self.pk})
+    
 

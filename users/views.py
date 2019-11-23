@@ -4,7 +4,7 @@ import os
 import requests
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView, UpdateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponse
@@ -117,3 +117,36 @@ def kakao_callback(request):
     except KakaoException as e:
         messages.error(request, e)
         return redirect(reverse("users:login"))
+
+
+class UserProfileView(DetailView):
+
+    model = models.User
+    template_name = "users/user_detail.html"
+    context_object_name = "user_obj"
+
+
+class UpdateProfileView(SuccessMessageMixin, UpdateView):
+
+    model = models.User
+    template_name = "users/update-profile.html"
+    fields = (
+        "first_name",
+        "last_name",
+        "gender",
+        "bio",
+        "major",
+    )
+    success_message = "프로필 업데이트"
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields["first_name"].widget.attrs = {"placeholder": "First_name"}
+        form.fields["last_name"].widget.attrs = {"placeholder": "Last_name"}
+        form.fields["gender"].widget.attrs = {"placeholder": "Gender"}
+        form.fields["bio"].widget.attrs = {"placeholder": "Bio"}
+        form.fields["major"].widget.attrs = {"palceholder": "Major"}
+        return form

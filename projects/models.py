@@ -44,14 +44,28 @@ class Project(core_models.TimeStampedModel):
     def count_apply(self):
         return self.apply.count()
 
+    def get_first_category(self):
+        try:
+            category, = self.categories.all()[:1]
+            return category
+        except ValueError:
+            return None
+
+    def get_second_category(self):
+        try:
+            category, = self.categories.all()[1:2]
+            return category
+        except ValueError:
+            return None
+
 
 class ProjectJob(core_models.TimeStampedModel):
 
     """ Job Model Definition """
 
     name = models.CharField(max_length=140)
-    start = models.TimeField()
-    due = models.TimeField()
+    start = models.DateField()
+    due = models.DateField()
     charger = models.ForeignKey(
         "users.User", related_name="project_jobs", on_delete=models.SET_NULL, null=True
     )
@@ -64,5 +78,5 @@ class ProjectJob(core_models.TimeStampedModel):
 
     def is_finished(self):
         now = timezone.now().date()
-        is_finished = now > self.due
+        is_finished = now >= self.due
         return is_finished
