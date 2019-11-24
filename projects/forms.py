@@ -20,3 +20,20 @@ class CreateProjectForm(forms.ModelForm):
         project = super().save(commit=False)
         return project
 
+
+class CreateProjectJobForm(forms.ModelForm):
+
+
+    class Meta:
+        model = models.ProjectJob
+        fields = (
+            "name",
+            "start",
+            "due",
+        )
+
+    def save(self):
+        projectjob = super().save(commit=False)
+        return projectjob
+
+

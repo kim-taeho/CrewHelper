@@ -17,13 +17,13 @@
                 
                 <a href="{{project.host.get_absolute_url}}" class="flex flex-col items-center mr-1">
                     {% include "mixins/user_avatar.html" with user=project.host %}
-                    <span class="mt-3 text-medium">{{project.host.first_name}}</span>
+                    <span class="mt-3 text-medium">{{project.host.first_name}}{{project.host.last_name}}</span>
                 </a>
 
                 {% for participant in participants %}
                     <a href="{{participant.user.get_absolute_url}}" class="flex flex-col items-center">
                         {% include "mixins/user_avatar.html" with user=participant.user %}
-                        <span class="mt-3 text-medium">{{participant.user.first_name}}</span>
+                        <span class="mt-3 text-medium">{{participant.user.first_name}}{{participant.user.last_name}}</span>
                     </a>
                 {% endfor %}
 
@@ -38,17 +38,25 @@
                 {{project.description}}
             </p>
 
-            <div class="border-b border-gray-400 pb-5 mt-5">
-                <h4 class="font-medium text-lg mb-5">Jobs</h4>
-                {% for j in project_job %}
-                    <li class="mb-2">{{j.name}}</li>
-                {% endfor %}                
+            <div class="mt-5 flex flex-row">
             </div>
+                <h4 class="font-medium text-lg mb-5 w-15 mr-2">업무</h4>
+                <form action="{% url 'projects:create-job' project.pk %}" method="POST" class="w-1/2">
+                    {% csrf_token %}
+                    {{form}}
+                    <button class="text-center py-3 rounded-lg font-light text-lg w-full text-white bg-red-500 mt-5">업무 생성</button>
+                </form>
 
-            
-                <p class="border-b border-gray-400 pb-5 mt-5">
-                    <a href="#" class="btn text-center py-3 px-4 rounded-lg font-medium text-lg w-full text-white bg-blue-500 text-white hover:text-gray-300">Job 생성</a>
-                </p>         
+            <div class="border-b border-gray-400 pb-5 mt-1 flex flex-row">
+            </div>
+                {% for j in project_job %}
+                    <li class="mb-2">{{j.name}}, |  {{j.charger.first_name}}{{j.charger.last_name}}</li>
+                {% endfor %}                
+            <div class="border-b border-gray-400 pb-5 mt-1 flex flex-row">
+            </div>
+            <p class="border-b border-gray-400 pb-5 mt-5">
+                <a href="#" class="btn text-center py-3 px-4 rounded-lg font-medium text-lg w-full text-white bg-red-300 text-white hover:text-gray-300">프로젝트 종료</a>
+            </p>         
         </div>
     </div>
         

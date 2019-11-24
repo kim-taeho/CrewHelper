@@ -6,8 +6,9 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView, FormView, View
 from django.contrib import messages
 from users import mixins as user_mixins
-from . import models
 from participant import models as participant_models
+from . import forms
+from . import models
 from . import forms
 
 
@@ -53,6 +54,7 @@ class ProjectMemberDetail(View):
             raise Http404()
         project_job = models.ProjectJob.objects.filter(project=project)
         participants = participant_models.Participant.objects.filter(project=project)
+        form = forms.CreateProjectJobForm()
         return render(
             self.request,
             "projects/member_project.html",
@@ -60,6 +62,24 @@ class ProjectMemberDetail(View):
                 "project": project,
                 "participants": participants,
                 "project_job": project_job,
+                "form": form,
             },
         )
 
+
+def create_job(request, project_pk):
+    if request.method == "POST":
+        form = forms.CreateProjectJobForm(request.POST)
+        project = models.Project.objects.get_or_none(pk=project_pk)
+        if not project:
+            return redirect(reverse("core:home"))
+        if form.is_valid():
+            job = form.save()
+            job.charger = request.user
+            job.project = project
+            job.save()
+            messages.success(request, "업무가 생성되었습니다")
+            return redirect(reverse("projects:member-detail", kwargs={"pk": project_pk}))
+
+
+        

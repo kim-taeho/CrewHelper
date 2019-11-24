@@ -59,7 +59,7 @@ class Project(core_models.TimeStampedModel):
         return self.participants.count() + 1
 
 
-class ProjectJob(core_models.TimeStampedModel):
+class ProjectJob(core_models.TimeStampedModel): 
 
     """ Job Model Definition """
 
