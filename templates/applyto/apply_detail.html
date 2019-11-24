@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+
+{% block page_title %}
+    Apply Detail
+{% endblock page_title %}
+
+{% block content %}
+
+    <div class="h-75vh">
+        <div class="container lg:w-5/12 md:w-1/2 xl:w-1/4 mx-auto my-10 flex flex-col items-center border p-6 border-gray-500">
+
+            {% include "mixins/user_avatar.html" with user=apply.apply_user %}
+            
+            <div class="flex items-center">
+                <span class="text-3xl mt-1">{{apply.apply_user.first_name}}{{apply.apply_user.last_name}}</span>
+            </div>
+
+            <span class="text-lg mb-5">{{apply.apply_user.major}}</span>  
+            <span class="text-lg mb-5">{{apply.apply_user.bio}}</span>
+        </div>
+        <div class="container lg:w-5/12 md:w-1/2 xl:w-1/4 mx-auto my-5 flex flex-col items-center p-6">
+            <a href="{% url 'applyto:toggle' apply.pk %}?action=accept" class="w-1/2 rounded-lg font-light text-lg text-center btn--small bg-indigo-300 text-white mb-2 p-1">참여수락</a>
+            <a href="{% url 'applyto:toggle' apply.pk %}?action=denied" class="w-1/2 rounded-lg font-light text-lg text-center btn--small bg-indigo-300 text-white mb-2 p-1">참여거절</a>
+            <a href="#" class="w-1/2 rounded-lg font-light text-lg text-center btn--small bg-indigo-300 text-white mb-2 p-1">메세지전송</a>
+        </div>
+    </div>
+
+{% endblock content %}

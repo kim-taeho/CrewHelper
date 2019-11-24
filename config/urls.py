@@ -23,4 +23,6 @@ urlpatterns = [
     path("users/", include("users.urls", namespace="users")),
     path("projects/", include("projects.urls", namespace="projects")),
     path("lists/", include("lists.urls", namespace="lists")),
+    path("participant", include("participant.urls", namespace="participant")),
+    path("apply", include("applyto.urls", namespace="applyto")),
 ]

@@ -48,8 +48,9 @@ PROJECT_APPS = [
     "users.apps.UsersConfig",
     "projects.apps.ProjectsConfig",
     "conversations.apps.ConversationsConfig",
-    "apply.apps.ApplyConfig",
+    "applyto.apps.ApplytoConfig",
     "lists.apps.ListsConfig",
+    "participant.apps.ParticipantConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -135,3 +136,5 @@ AUTH_USER_MODEL = "users.User"
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+LOGIN_URL = "/users/login"

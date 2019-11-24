@@ -36,11 +36,6 @@ class Command(BaseCommand):
                 magic_number = random.randint(0, 15)
                 if magic_number % 2 == 0:
                     project.categories.add(a)
-            
-            for a in all_user:
-                magic_number = random.randint(0, 40)
-                if magic_number % 2 == 0:
-                    project.members.add(a)
 
         self.stdout.write(self.style.SUCCESS(f"{number} projects created!"))
 

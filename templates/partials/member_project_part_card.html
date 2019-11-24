@@ -1,0 +1,25 @@
+<div class="w-1/5 mb-10 px-2 overflow-hidden border border-black mr-10 ml-5 rounded">
+    <a href="{% url 'projects:member-detail' participant.project.pk %}">
+         <div class="flex justify-between mb-1px truncate">
+            <div class="w-3/4 overflow-hidden flex">
+                <span class="text-sm text-gray-700 block truncate p-1 mr-2 text-indigo-500">
+                <i class="fas fa-user-friends"></i>
+                    조원
+                </span>
+            </div>
+        </div>
+
+        <div class="flex justify-between mb-1px truncate">
+            <div class="w-3/4 overflow-hidden flex">
+                <span class="text-sm text-gray-700 block truncate p-1 mr-2 text-blue-700">
+                    <i class="fas fa-poll text-teal-400 text-lg"></i>
+                    {{participant.project.get_first_category}}, {{participant.project.get_second_category}}
+                </span>
+            </div>
+        </div>
+
+        <span class="text-black w-11/12 block truncate text-xl">
+            <i class="fas fa-lightbulb mr-2"></i> {{participant.project.name}}
+        </span>
+    </a>
+</div>

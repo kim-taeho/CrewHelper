@@ -21,7 +21,6 @@ def toggle_project(request, project_pk):
             messages.info(request, "즐겨찾기에서 삭제되었습니다")
     return redirect(reverse("projects:detail", kwargs={"pk": project_pk}))
 
-
 class SeeFavsView(TemplateView):
 
     template_name = "lists/list_detail.html"

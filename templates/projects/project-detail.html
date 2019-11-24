@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load on_favs %}
+{% load on_favs check_apply %}
 
 {% block page_title %}
     {{project.name}}
@@ -29,7 +29,8 @@
                 {% endif %}
 
             <p class="border-b border-gray-400 pb-5 mt-5 font-bold">
-                <i class="fas fa-users text-xl mr-3"></i>{{project.get_members}}
+                <i class="fas fa-users text-xl mr-3"></i>
+                {{project.count_participants}}
             </p>
 
             <p class="border-b border-gray-400 pb-5 mt-5">
@@ -42,6 +43,17 @@
                     <li class="mb-2">{{a}}</li>
                 {% endfor %}                
             </div>
+
+            {% check_apply project as check_apply_bool %}
+            {% if check_apply_bool %}
+                <p class="border-b border-gray-400 pb-5 mt-5">
+                    <a href="{% url 'applyto:delete' project.pk %}" class="btn text-center py-3 px-4 rounded-lg font-medium text-lg w-full text-white bg-blue-500 text-white hover:text-gray-300">신청취소</a>
+                </p>
+            {% else %}
+                <p class="border-b border-gray-400 pb-5 mt-5">
+                    <a href="{% url 'applyto:create' project.pk %}" class="btn text-center py-3 px-4 rounded-lg font-medium text-lg w-full text-white bg-blue-500 text-white hover:text-gray-300">참가신청</a>
+                </p>
+            {% endif %}
             
         </div>
     </div>

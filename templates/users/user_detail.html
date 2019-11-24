@@ -10,29 +10,38 @@
     <div class="h-75vh">
             <div class="container lg:w-5/12 md:w-1/2 xl:w-1/4 mx-auto my-10 flex flex-col items-center border p-6 border-gray-500">
         
-        
+        {% include "mixins/user_avatar.html" with user=user_obj %}
 
         <div class="flex items-center">
-            <span class="text-3xl mt-1">{{user_obj.first_name}}</span>
+            <span class="text-3xl mt-1">{{user_obj.first_name}}{{user_obj.last_name}}</span>
         </div>
-
+        <span class="text-lg mb-5">{{user_obj.major}}</span>  
         <span class="text-lg mb-5">{{user_obj.bio}}</span>
 
         {% if user == user_obj %}
-            <a href="{% url 'users:update' %}" class="btn btn--small bg-red-500 text-white">Edit Profile</a>
+            <a href="{% url 'users:update' %}" class="btn btn--small bg-red-500 text-white font-bold">프로필 수정</a>
         {% endif %}
-
     </div>
 
     {% if user_obj.project_host.count > 0 %}
         <div class="container mx-auto pb-10">
-            <h3 class="mb-6 text-2xl">진행중인 Project</h3>
-            <div class="flex flex-wrap -mx-40 mt-10">
+            <h3 class="mb-6 text-2xl font-bold"><i class="fas fa-spinner text-3xl mr-2 text-blue-600 font-bold"></i>프로젝트</h3>
+            <div class="flex flex-wrap mx-1 mt-5">
                 {% for project in user_obj.project_host.all %}
-                    {% include "partials/project_card.html" with project=project %}
+                    {% include "partials/member_project_card.html" with project=project %}
                 {% endfor %}
+                {% for participant in user_obj.participants.all %}
+                    {% include "partials/member_project_part_card.html" with participant=participant %}
+                {% endfor %}
+            </div>
+
+            <h3 class="mb-6 text-2xl font-bold"><i class="fas fa-envelope text-3xl mr-1 text-blue-600 font-bold"></i>참가신청</h3>
+            <div class="flex flex-wrap mx-1 mt-5">
+                {% for apply in user.apply.all %}
+                    {% include "mixins/apply-card.html" with apply=apply %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
     {% endif %}
     </div>
 

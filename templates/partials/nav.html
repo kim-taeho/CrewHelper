@@ -2,7 +2,7 @@
     {% if user.is_authenticated %}
         <li class="nav_link text-lg"><a href="#"><i class="fas fa-bell text-lg mr-2 text-blue-500"></i>()</a></li>
 
-        <li class="nav_link"><a href="#"><i class="fas fa-handshake text-xl"></i></a></li> 
+        <li class="nav_link"><a href="{% url 'projects:create' %}"><i class="fas fa-handshake text-xl"></i></a></li> 
         {% comment %} 프로젝트 생성    {% endcomment %}
         
         <li class="nav_link"><a href="{{user.get_absolute_url}}"><i class="fas fa-user-alt text-xl"></i></a></li>

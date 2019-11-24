@@ -21,17 +21,7 @@ class ProjectJobAdmin(admin.ModelAdmin):
     """ Project Job Admin Definition """
 
     fieldsets = (
-        (
-            "Basic Info",
-            {
-                "fields": (
-                    "name", 
-                    "start", 
-                    "due", 
-                    "charger", 
-                    "project", 
-                    )},
-        ),
+        ("Basic Info", {"fields": ("name", "start", "due", "charger", "project",)},),
     )
 
     list_display = (
@@ -59,16 +49,7 @@ class ProjectAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {
-                "fields": (
-                    "name",
-                    "description",
-                    "categories",
-                    "host",
-                    "members",
-                    "on_market",
-                )
-            },
+            {"fields": ("name", "description", "categories", "host", "on_market",)},
         ),
     )
 
@@ -76,15 +57,8 @@ class ProjectAdmin(admin.ModelAdmin):
         "name",
         "host",
         "on_market",
-        "count_apply",
     )
 
     raw_id_fields = ("host",)
 
-    filter_horizontal = (
-        "categories",
-        "members",
-    )
-
-    def count_members(self, obj):
-        return obj.members.count()
+    filter_horizontal = ("categories",)

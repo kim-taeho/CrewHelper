@@ -34,9 +34,6 @@ class Project(core_models.TimeStampedModel):
     host = models.ForeignKey(
         "users.User", related_name="project_host", on_delete=models.CASCADE
     )
-    members = models.ManyToManyField(
-        "users.User", related_name="project_members", blank=True
-    )
 
     def __str__(self):
         return self.name
@@ -58,10 +55,8 @@ class Project(core_models.TimeStampedModel):
         except ValueError:
             return None
 
-    def get_members(self):
-        num = self.members.count()
-        return num
-        
+    def count_participants(self):
+        return self.participants.count() + 1
 
 
 class ProjectJob(core_models.TimeStampedModel):
