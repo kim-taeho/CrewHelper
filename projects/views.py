@@ -46,7 +46,7 @@ class CreateProjectView(user_mixins.LoggedInOnlyView, FormView):
         return redirect(reverse("projects:detail", kwargs={"pk": project.pk}))
 
 
-class ProjectMemberDetail(View):
+class ProjectMemberDetail(user_mixins.LoggedInOnlyView, View):
     def get(self, *args, **kwargs):
         pk = kwargs.get("pk")
         project = models.Project.objects.get_or_none(pk=pk)

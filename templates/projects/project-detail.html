@@ -7,7 +7,10 @@
 {% endblock page_title %}
 
 {% block content %}
-
+<style>
+    .pro_zoom{}
+    .pro_zoom:hover{transform:rotate(3deg)}
+</style>
     <div class="container mx-auto flex justify-around pb-56">
         <div class="w-1/2">
             <div class="flex justify-between">
@@ -23,9 +26,9 @@
 
                 {% on_favs project as on_favs_boolean %}
                 {% if on_favs_boolean %}
-                    <a class="block mb-10 w-2/6 text-teal-600 font-bold" href="{% url 'lists:toggle-project' project.pk %}?action=remove"><i class="fas fa-heart text-red-500 text-2xl"></i></a>
+                    <a class="block mb-10 w-2/6 text-teal-600 font-bold pro_zoom" href="{% url 'lists:toggle-project' project.pk %}?action=remove"><i class="fas fa-heart text-red-500 text-2xl"></i></a>
                 {% else %}
-                    <a class="block mb-10 w-2/6 text-teal-600 font-bold" href="{% url 'lists:toggle-project' project.pk %}?action=add"><i class="far fa-heart text-red-500 text-2xl"></i></a>
+                    <a class="block mb-10 w-2/6 text-teal-600 font-bold pro_zoom" href="{% url 'lists:toggle-project' project.pk %}?action=add"><i class="far fa-heart text-red-500 text-2xl"></i></a>
                 {% endif %}
 
             <p class="border-b border-gray-400 pb-5 mt-5 font-bold">

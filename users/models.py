@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.db import models
 from core import models as core_models
+from core import managers
 
 class User(AbstractUser):
 
@@ -152,7 +153,7 @@ class User(AbstractUser):
         (LOGIN_EMAIL, "EMAIL"),
         (LOGIN_KAKAO, "KAKAO"),
     )
-
+    objects = managers.CustomModelManager()
     gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
     bio = models.TextField(default="")
     major = models.CharField(choices=MAJOR_CHOICES, max_length=20, blank=True)

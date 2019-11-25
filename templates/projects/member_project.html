@@ -7,7 +7,10 @@
 {% endblock page_title %}
 
 {% block content %}
-
+<style>
+    .pro_zoom{}
+    .pro_zoom:hover{transform:scale(1.05)}
+</style>
     <div class="container mx-5 flex justify-around pb-56">
         <div class="w-1/2">
             <div class="flex justify-between">
@@ -40,24 +43,31 @@
 
             <div class="mt-5 flex flex-row">
             </div>
-                <h4 class="font-medium text-lg mb-5 w-15 mr-2">업무</h4>
                 <form action="{% url 'projects:create-job' project.pk %}" method="POST" class="w-1/2">
                     {% csrf_token %}
                     {{form}}
-                    <button class="text-center py-3 rounded-lg font-light text-lg w-full text-white bg-red-500 mt-5">업무 생성</button>
+                    <button class="pro_zoom text-center py-3 rounded-lg font-light text-lg w-full text-white bg-red-500 mt-5">업무 생성</button>
                 </form>
 
             <div class="border-b border-gray-400 pb-5 mt-1 flex flex-row">
             </div>
-                {% for j in project_job %}
-                    <li class="mb-2">{{j.name}}, |  {{j.charger.first_name}}{{j.charger.last_name}}</li>
-                {% endfor %}                
-            <div class="border-b border-gray-400 pb-5 mt-1 flex flex-row">
-            </div>
-            <p class="border-b border-gray-400 pb-5 mt-5">
+                               
+            <p class="border-b border-gray-400 pb-5 mt-5 pro_zoom">
                 <a href="#" class="btn text-center py-3 px-4 rounded-lg font-medium text-lg w-full text-white bg-red-300 text-white hover:text-gray-300">프로젝트 종료</a>
             </p>         
         </div>
+
+        <div>
+            <h4 class="font-medium text-xl mb-5 w-15 mr-2">업 무</h4>
+            {% for j in project_job %}
+                <li class="mb-2 list-none ml-4 mb-6 border border-gray-600 rounded-lg w-full p-2">
+                    <div class="mb-1 text-lg"><i class="fas fa-check-circle mr-2"></i>{{j.name}}</div>
+                    <span class="mr-3"><i class="fas fa-user-check mr-2 ml-2 text-pink-400"></i>{{j.charger.first_name}}{{j.charger.last_name}}</span>
+                    <span><i class="fas fa-calendar-day mr-2"></i>{{j.start}} ~ {{j.due}}</span>
+                </li>
+            {% endfor %} 
+        </div>
+
     </div>
         
 {% endblock content %}
