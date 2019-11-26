@@ -3,7 +3,6 @@ from . import models
 
 
 class CreateProjectForm(forms.ModelForm):
-
     class Meta:
         model = models.Project
         fields = (
@@ -15,15 +14,13 @@ class CreateProjectForm(forms.ModelForm):
             "name": forms.TextInput(attrs={"placeholder": "Name"}),
             "description": forms.TextInput(attrs={"placeholder": "Description"}),
         }
-        
+
     def save(self, *args, **kwargs):
         project = super().save(commit=False)
         return project
 
 
 class CreateProjectJobForm(forms.ModelForm):
-
-
     class Meta:
         model = models.ProjectJob
         fields = (
@@ -35,5 +32,4 @@ class CreateProjectJobForm(forms.ModelForm):
     def save(self):
         projectjob = super().save(commit=False)
         return projectjob
-
 

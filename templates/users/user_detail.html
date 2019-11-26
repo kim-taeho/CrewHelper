@@ -42,11 +42,13 @@
                     {% endfor %}
                 </div>
 
-                <h3 class="mb-6 text-2xl font-bold"><i class="fas fa-envelope text-3xl mr-1 text-blue-600 font-bold"></i>참가신청</h3>
+                <h3 class="mb-6 text-2xl font-bold"><i class="fas fa-envelope text-3xl mr-1 text-blue-600 font-bold"></i>받은 참가신청</h3>
                 <div class="flex flex-wrap mx-1 mt-5">
-                    {% for apply in user.apply.all %}
-                        {% include "mixins/apply-card.html" with apply=apply %}
-                    {% endfor %}
+                    {% if user.apply.project__host == user_obj %}
+                        {% for apply in user.apply.all %}
+                            {% include "mixins/apply-card.html" with apply=apply %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         {% endif %}

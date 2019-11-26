@@ -12,4 +12,5 @@ urlpatterns = [
         views.create_job,
         name="create-job",
     ),
+    path("toggle/<int:pk>/", views.toggle_market, name="toggle"),
 ]

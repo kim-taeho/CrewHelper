@@ -48,14 +48,16 @@
             </div>
 
             {% check_apply project as check_apply_bool %}
-            {% if check_apply_bool %}
-                <p class="border-b border-gray-400 pb-5 mt-5">
-                    <a href="{% url 'applyto:delete' project.pk %}" class="btn text-center py-3 px-4 rounded-lg font-medium text-lg w-full text-white bg-blue-500 text-white hover:text-gray-300">신청취소</a>
-                </p>
-            {% else %}
-                <p class="border-b border-gray-400 pb-5 mt-5">
-                    <a href="{% url 'applyto:create' project.pk %}" class="btn text-center py-3 px-4 rounded-lg font-medium text-lg w-full text-white bg-blue-500 text-white hover:text-gray-300">참가신청</a>
-                </p>
+            {% if project.host != user %}
+                {% if check_apply_bool %}
+                    <p class="border-b border-gray-400 pb-5 mt-5">
+                        <a href="{% url 'applyto:delete' project.pk %}" class="btn text-center py-3 px-4 rounded-lg font-medium text-lg w-full text-white bg-blue-500 text-white hover:text-gray-300">신청취소</a>
+                    </p>
+                {% else %}
+                    <p class="border-b border-gray-400 pb-5 mt-5">
+                        <a href="{% url 'applyto:create' project.pk %}" class="btn text-center py-3 px-4 rounded-lg font-medium text-lg w-full text-white bg-blue-500 text-white hover:text-gray-300">참가신청</a>
+                    </p>
+                {% endif %}
             {% endif %}
             
         </div>

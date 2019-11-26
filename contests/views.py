@@ -50,8 +50,8 @@ def scrape(request):
 
 class ContestView(ListView):
     model = models.Contests
-    paginate_by = 12
+    paginate_by = 24
     paginate_orphans = 2
     context_object_name = "contests"
-    template_name = "contests/contest_all.html"
+    template_name = "contests/contests_all.html"
 

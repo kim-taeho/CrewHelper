@@ -25,9 +25,9 @@ class HomeView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context.update({
-            'contests': contest_models.Contests.objects.all()[:12],
-        })
+        context.update(
+            {"contests": contest_models.Contests.objects.all()[:12],}
+        )
         return context
 
 
@@ -87,7 +87,20 @@ def create_job(request, project_pk):
             job.project = project
             job.save()
             messages.success(request, "업무가 생성되었습니다")
-            return redirect(reverse("projects:member-detail", kwargs={"pk": project_pk}))
+            return redirect(
+                reverse("projects:member-detail", kwargs={"pk": project_pk})
+            )
 
 
-        
+def toggle_market(request, pk):
+    the_project = models.Project.objects.get_or_none(pk=pk)
+    if the_project.on_market is True:
+        the_project.on_market = False
+        the_project.save()
+        messages.success(request, "공고등록을 마갑하였습니다")
+    else:
+        the_project.on_market = True
+        the_project.save()
+        messages.success(request, "공고를 등록하였습니다")
+    return redirect(reverse("projects:member-detail", kwargs={"pk": pk}))
+

@@ -35,8 +35,16 @@
             <p class="border-b border-gray-400 pb-5 mt-5 font-bold">
                 <i class="fas fa-users text-xl mr-3"></i>
                 {{project.count_participants}}
+                
+                {% if project.on_market %}
+                    <a href="{% url 'projects:toggle' project.pk %}" class="pro_zoom text-center ml-20 py-2 px-3 rounded-lg font-bold w-full text-black bg-green-400 hover:text-white-300"><i class="fas fa-ellipsis-h mr-2"></i>공고마감</a>
+                {% else %}
+                    <a href="{% url 'projects:toggle' project.pk %}" class="pro_zoom text-center ml-20 py-2 px-3 rounded-lg font-bold w-full text-black bg-yellow-500 hover:text-white-300"><i class="fas fa-share-alt mr-2"></i>공고등록</a>
+                {% endif %}
+                
             </p>
-
+            
+            
             <p class="border-b border-gray-400 pb-5 mt-5">
                 {{project.description}}
             </p>
@@ -46,7 +54,7 @@
                 <form action="{% url 'projects:create-job' project.pk %}" method="POST" class="w-1/2">
                     {% csrf_token %}
                     {{form}}
-                    <button class="pro_zoom text-center py-3 rounded-lg font-light text-lg w-full text-white bg-red-500 mt-5">업무 생성</button>
+                    <button class="pro_zoom text-center py-3 rounded-lg font-bold text-lg w-full text-white bg-teal-500 mt-5">업무 생성</button>
                 </form>
 
             <div class="border-b border-gray-400 pb-5 mt-1 flex flex-row">
