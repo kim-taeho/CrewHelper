@@ -7,10 +7,17 @@
 
 {% block content %}
     <div class="container mx-auto pb-10">
-        <div class="bg-gray-800 -mx-40 rounded-xl h-50vh mt-32 mx-auto bg-cover bg-center">
-            WEB SCRAPPING
+        <div class="flex flex-between">
+        <div class="-mx-40 text-xl font-bold">진행중인 공모전</div>
+        <a href="{% url 'contests:all' %}" class="mx-40 text-lg">더보기</a>
+        </div>
+        <div class="flex flex-wrap -mx-40 mt-10">
+            {% for contest in contests %}
+                {% include "partials/contest_card.html" with contest=contest %}
+            {% endfor %}
         </div>
         
+        <div class="-mx-40 text-xl font-bold">공고중 프로젝트</div>
         <div class="flex flex-wrap -mx-40 mt-10">
             {% for project in projects %}
                 {% on_mar project as on_mar_bool %}
@@ -19,7 +26,7 @@
                 {% endif %}
             {% endfor %}
         </div>
-
+        
         <div class="flex items-center justify-center mx-auto container">
             {% if page_obj.has_previous %}
                 <a href="?page={{page_obj.number|add:-1}}" class="text-teal-500">

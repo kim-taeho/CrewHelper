@@ -20,10 +20,12 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("core.urls", namespace="core")),
+    path("notepads/", include("notepads.urls", namespace="notepads")),
     path("users/", include("users.urls", namespace="users")),
     path("projects/", include("projects.urls", namespace="projects")),
     path("lists/", include("lists.urls", namespace="lists")),
     path("participant", include("participant.urls", namespace="participant")),
-    path("apply", include("applyto.urls", namespace="applyto")),
+    path("applyto", include("applyto.urls", namespace="applyto")),
     path("conversations/", include("conversations.urls", namespace="conversations")),
+    path("contests/", include("contests.urls", namespace="contests")),
 ]

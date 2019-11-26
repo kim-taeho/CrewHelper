@@ -16,9 +16,11 @@
             <span class="text-3xl mt-1">{{user_obj.first_name}}{{user_obj.last_name}}</span>
         </div>
         <span class="text-lg mb-5">{{user_obj.major}}</span>  
+        {% if user != user_obj %}
         <div class="mb-2">
             <a href="{% url 'conversations:go' user_obj.pk user.pk %}" class="font-medium text-teal-500">메세지 전송</a>
         </div>
+        {% endif %}
         <span class="text-lg mb-5">{{user_obj.bio}}</span>
         {% if user != user_obj %}
         {% endif %}

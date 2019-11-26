@@ -10,6 +10,7 @@ from participant import models as participant_models
 from . import forms
 from . import models
 from . import forms
+from contests import models as contest_models
 
 
 class HomeView(ListView):
@@ -21,6 +22,13 @@ class HomeView(ListView):
     paginate_orphans = 2
     context_object_name = "projects"
     template_name = "projects/home.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context.update({
+            'contests': contest_models.Contests.objects.all()[:12],
+        })
+        return context
 
 
 class ProjectDetail(DetailView):

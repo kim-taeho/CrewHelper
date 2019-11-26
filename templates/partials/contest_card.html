@@ -1,0 +1,22 @@
+<style>
+    .pro_zoom{}
+    .pro_zoom:hover{transform:scale(1.1)}
+</style>
+<div class="w-1/5 mb-10 px-2 overflow-hidden border border-black mr-10 ml-5 rounded pro_zoom">
+    <a href="#">
+        <div class="flex justify-between mb-1px truncate">
+            <div class="w-4/5 overflow-hidden flex">
+                <span class="text-gray-700 block truncate p-1 mr-2 text-blue-700">
+                    {{contest.title}}
+                </span>
+            </div>
+        </div>
+
+        <span class="text-sm text-black w-11/12 block truncate ml-2 mb-1">
+            {{contest.company}}
+        </span>
+        <span class="text-sm text-black w-11/12 block truncate ml-2">
+            {{contest.day}}
+        </span>
+    </a>
+</div>
