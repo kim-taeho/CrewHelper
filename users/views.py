@@ -12,6 +12,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files.base import ContentFile
 from . import forms
 from . import models
+from conversations import models as con_models
 
 
 class LoginView(FormView):
@@ -158,3 +159,12 @@ def notification(request, pk):
         "user": the_user
     }
     return render(request, "partials/notifications.html", context)
+
+
+def user_messages(request, pk):
+    the_user = models.User.objects.get_or_none(pk=pk)
+    conversations = con_models.Conversation.objects.all()
+    context = {
+        "conversations": conversations
+    }
+    return render(request, "users/user_messages.html", context)

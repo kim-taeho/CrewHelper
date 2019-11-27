@@ -19,6 +19,10 @@
                 <img class="w-8" src="{% static 'img/logo.png' %}" />
             </a>
         </div>
+        {% block search-bar %}
+        
+        {% endblock search-bar %}
+        
         {% include "partials/nav.html" %}
     </header>
         {% block content %}

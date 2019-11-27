@@ -33,3 +33,12 @@ class CreateProjectJobForm(forms.ModelForm):
         projectjob = super().save(commit=False)
         return projectjob
 
+
+class SearchForm(forms.Form):
+
+    name = forms.CharField(initial="Project Name")
+    categories = forms.ModelMultipleChoiceField(
+        required=False,
+        queryset=models.Category.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )

@@ -13,5 +13,6 @@ urlpatterns = [
     path("<int:pk>/", views.UserProfileView.as_view(), name="profile"),
     path("update-profile", views.UpdateProfileView.as_view(), name="update"),
     path("notifications/<int:pk>/", views.notification, name="notifications"),
+    path("messages/<int:pk>/", views.user_messages, name="conversations"),
 
 ]

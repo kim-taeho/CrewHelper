@@ -8,7 +8,7 @@
 
         <li class="nav_link pro_zoom"><a href="{% url 'projects:create' %}"><i class="fas fa-handshake text-xl"></i></a></li> 
         {% comment %} 프로젝트 생성    {% endcomment %}
-        
+        <li class="nav_link pro_zoom"><a href="{% url 'users:conversations' user.pk %}"><i class="fas fa-envelope text-xl"></i></a></li>
         <li class="nav_link pro_zoom"><a href="{{user.get_absolute_url}}"><i class="fas fa-user-alt text-xl"></i></a></li>
         <li class="nav_link text-lg pro_zoom"><a href="{% url 'lists:see-favs' %}"><i class="fab fa-gratipay text-lg mr-2 text-red-400"></i>({{user.list.projects.count}})</a></li>
         <li class="nav_link pro_zoom"><a href="{% url 'users:logout' %}">LOGOUT</a></li>

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load on_mar %}
+
+{% block page_title %}
+    All Contests
+{% endblock page_title %}
+
+{% block search-bar %}
+    <form method="get" action="{% url 'projects:search' %}" class="w-5/11">
+    <input
+        class="search-box border w-full font-medium text-gray-900 placeholder-gray-600 py-3 rounded-sm w-64 shadow-md hover:shadow-lg focus:outline-none"
+        name="Project_Name" placeholder="프로젝트 검색" />
+    </form>
+{% endblock search-bar %}
+
+{% block content %}
+    <div class="container mx-auto pb-10">
+      <div class="flex flex-between">
+            <div class="-mx-40 text-xl font-bold">공고중 프로젝트</div>
+                
+            </div>
+            <div class="flex flex-wrap -mx-40 mt-10">
+            {% for project in market_projects %}
+                {% on_mar project as on_mar_bool %}
+                {% if on_mar_bool %}
+                    {% include "partials/project_card.html" with project=project %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div class="flex items-center justify-center mx-auto container">
+            {% if page_obj.has_previous %}
+                <a href="?page={{page_obj.number|add:-1}}" class="text-teal-500">
+                    <i class="fas fa-arrow-left fa-lg"></i>
+                </a>    
+            {% endif %}
+
+                <span class="mx-3 font-medium text-lg">{{page_obj.number}} of {{page_obj.paginator.num_pages}}</span>
+                
+            {% if page_obj.has_next %}
+                <a href="?page={{page_obj.number|add:1}}" class="text-teal-500">
+                    <i class="fas fa-arrow-right fa-lg"></i>
+                </a>    
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

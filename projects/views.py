@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, FormView, View
 from django.contrib import messages
+from django.core.paginator import Paginator
 from users import mixins as user_mixins
 from participant import models as participant_models
 from . import forms
@@ -22,6 +23,10 @@ class HomeView(ListView):
     paginate_orphans = 2
     context_object_name = "projects"
     template_name = "projects/home.html"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(on_market=True)
 
     def get_context_data(self, *args, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
@@ -103,4 +108,60 @@ def toggle_market(request, pk):
         the_project.save()
         messages.success(request, "공고를 등록하였습니다")
     return redirect(reverse("projects:member-detail", kwargs={"pk": pk}))
+
+
+class AllMarketProjectView(ListView):
+    model = models.Project
+    paginate_by = 24
+    paginate_orphans = 2
+    context_object_name = "market_projects"
+    template_name = "projects/all_project.html"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(on_market=True)
+    
+
+class SearchView(View):
+    """ Search View Definition """
+    def get(self, request):
+
+        name = request.GET.get("Project_Name")
+
+        if name:
+
+            form = forms.SearchForm(request.GET)
+
+            if form.is_valid():
+                name = form.cleaned_data.get("name")
+                categories = form.cleaned_data.get("categories")
+
+                filter_args = {}
+
+                if name != "Project Name":
+                    filter_args["name__startswith"] = name
+
+                for category in categories:
+                    filter_args["categories"] = category
+
+                qs = models.Project.objects.filter(**filter_args).order_by("created")
+
+                paginator = Paginator(qs, 10, orphans=5)
+
+                page = request.GET.get("page", 1)
+
+                projects = paginator.get_page(page)
+
+                return render(request, "projects/search.html", {"form": form, "projects": projects})
+
+            else:
+
+                form = forms.SearchForm()
+
+        else:
+            form = forms.SearchForm()
+            return render(request, "projects/search.html", {"form": form})
+
+                
+
 
