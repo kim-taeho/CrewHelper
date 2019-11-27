@@ -150,3 +150,11 @@ class UpdateProfileView(SuccessMessageMixin, UpdateView):
         form.fields["bio"].widget.attrs = {"placeholder": "Bio"}
         form.fields["major"].widget.attrs = {"palceholder": "Major"}
         return form
+
+
+def notification(request, pk):
+    the_user = models.User.objects.get_or_none(pk=pk)
+    context = {
+        "user": the_user
+    }
+    return render(request, "partials/notifications.html", context)

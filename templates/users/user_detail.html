@@ -8,7 +8,7 @@
 {% block content %}
 
     <div class="h-75vh">
-            <div class="container lg:w-5/12 md:w-1/2 xl:w-1/4 mx-auto my-10 flex flex-col items-center border p-6 border-gray-500">
+            <div class="container lg:w-5/12 md:w-1/2 xl:w-1/4 mx-auto my-12 flex flex-col items-center border p-6 border-gray-500">
         
         {% include "mixins/user_avatar.html" with user=user_obj %}
 
@@ -40,15 +40,6 @@
                     {% for participant in user_obj.participants.all %}
                         {% include "partials/member_project_part_card.html" with participant=participant %}
                     {% endfor %}
-                </div>
-
-                <h3 class="mb-6 text-2xl font-bold"><i class="fas fa-envelope text-3xl mr-1 text-blue-600 font-bold"></i>받은 참가신청</h3>
-                <div class="flex flex-wrap mx-1 mt-5">
-                    {% if user.apply.project__host == user_obj %}
-                        {% for apply in user.apply.all %}
-                            {% include "mixins/apply-card.html" with apply=apply %}
-                        {% endfor %}
-                    {% endif %}
                 </div>
             </div>
         {% endif %}

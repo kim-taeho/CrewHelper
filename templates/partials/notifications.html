@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block page_title %}
+    {{user.first_name}}'s Profile
+{% endblock page_title %}
+
+{% block content %}
+<style>
+    .pro_zoom{}
+    .pro_zoom:hover{transform:scale(1.5)}
+</style>
+
+<div class="h-75vh">
+    <div class="container lg:w-5/12 md:w-1/2 xl:w-1/4 mx-auto my-10 flex flex-col items-center border pt-5 border-gray-500">
+        <h3 class="mb-6 text-2xl font-bold"><i class="fas fa-envelope text-3xl mr-1 text-blue-600 font-bold"></i>받은 참가신청</h3>
+        <div class="mx-1 mt-5 flex flex-col w-2/3">
+                {% for apply in user.applyto.all %}
+                    {% include "mixins/apply-card.html" with apply=apply %}
+                {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

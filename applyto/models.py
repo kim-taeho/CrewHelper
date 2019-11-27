@@ -12,6 +12,9 @@ class Apply(core_models.TimeStampedModel):
         "projects.Project", related_name="apply", on_delete=models.CASCADE
     )
     apply_user = models.ForeignKey(
-        "users.User", related_name="apply", on_delete=models.CASCADE
+        "users.User", related_name="apply_user", on_delete=models.CASCADE
+    )
+    applyto = models.ForeignKey(
+        "users.User", related_name="applyto", on_delete=models.CASCADE, null=True
     )
 

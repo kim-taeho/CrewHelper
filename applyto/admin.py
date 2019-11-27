@@ -10,4 +10,5 @@ class ApplyAdmin(admin.ModelAdmin):
     list_display = (
         "project",
         "apply_user",
+        "applyto",
     )

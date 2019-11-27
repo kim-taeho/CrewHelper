@@ -4,7 +4,7 @@
 </style>
 <ul class="flex items-center text-sm font-medium h-full">
     {% if user.is_authenticated %}
-        <li class="nav_link text-lg pro_zoom"><a href="#"><i class="fas fa-bell text-lg mr-2 text-blue-500"></i>()</a></li>
+        <li class="nav_link text-lg pro_zoom"><a href="{% url 'users:notifications' user.pk %}"><i class="fas fa-bell text-lg mr-2 text-blue-500"></i>({{user.applyto.count}})</a></li>
 
         <li class="nav_link pro_zoom"><a href="{% url 'projects:create' %}"><i class="fas fa-handshake text-xl"></i></a></li> 
         {% comment %} 프로젝트 생성    {% endcomment %}

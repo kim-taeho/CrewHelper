@@ -1,4 +1,8 @@
-<div class="w-1/5 mb-10 px-2 overflow-hidden border border-black mr-10 ml-5 rounded">
+<style>
+    .pro_zoom{}
+    .pro_zoom:hover{transform:scale(1.1)}
+</style>
+<div class="w-1/5 mb-10 px-2 overflow-hidden border border-black mr-10 ml-5 rounded pro_zoom">
     <a href="{% url 'projects:member-detail' project.pk %}">
         <div class="flex justify-between mb-1px truncate">
             <div class="w-3/4 overflow-hidden flex">
