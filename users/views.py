@@ -95,23 +95,17 @@ def kakao_callback(request):
         profile_image = properties.get("profile_image")
         try:
             user = models.User.objects.get(email=email)
-            if user.login_method != models.User.LOGING_KAKAO:
+            if user.login_method != models.User.LOGIN_KAKAO:
                 raise KakaoException(f"Please log in with: {user.login_method}")
         except models.User.DoesNotExist:
             user = models.User.objects.create(
                 email=email,
                 username=email,
                 first_name=nickname,
-                login_method=models.User.LOGING_KAKAO,
-                email_verified=True,
+                login_method=models.User.LOGIN_KAKAO,
             )
             user.set_unusable_password()
             user.save()
-            if profile_image is not None:
-                photo_request = requests.get(profile_image)
-                user.avatar.save(
-                    f"{nickname}-avatar", ContentFile(photo_request.content)
-                )
         messages.success(request, f"Welcome back {user.first_name}")
         login(request, user)
         return redirect(reverse("core:home"))
