@@ -15,21 +15,9 @@ class CreateProjectForm(forms.ModelForm):
             "description": forms.TextInput(attrs={"placeholder": "Description"}),
         }
 
-    def clean_categories(self):
-        categories = self.cleaned_data("categories")
-        try:
-            models.Category.objects.get(categories=categories)
-            return categories
-            
-        except models.Category.DoesNotExist:
-            raise forms.ValidationError(
-                "That Category is Not Exist", code="No Category"
-        )
-
     def save(self, *args, **kwargs):
         project = super().save(commit=False)
-        # categories = self.cleaned_data("categories")
-        project.save()
+        return project
 
 
 class CreateProjectJobForm(forms.ModelForm):
