@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.http import Http404
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, FormView, View
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -49,6 +49,7 @@ class CreateProjectView(user_mixins.LoggedInOnlyView, FormView):
 
     form_class = forms.CreateProjectForm
     template_name = "projects/project_create.html"
+    success_url = reverse_lazy("core:home")
 
     def form_valid(self, form):
         project = form.save()
@@ -56,7 +57,7 @@ class CreateProjectView(user_mixins.LoggedInOnlyView, FormView):
         project.save()
 
         messages.success(self.request, "프로젝트가 생성되었습니다")
-        return redirect(reverse("projects:detail", kwargs={"pk": project.pk}))
+        return super().form_valid(form) 
 
 
 class ProjectMemberDetail(user_mixins.LoggedInOnlyView, View):

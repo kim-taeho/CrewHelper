@@ -14,6 +14,6 @@
         <li class="nav_link pro_zoom"><a href="{% url 'users:logout' %}">LOGOUT</a></li>
     {% else %}
         <li class="nav_link pro_zoom"><a href="{% url 'users:login' %}">LOGIN</a></li>
-        <li class="nav_link pro_zoom"><a href="#">JOIN</a></li>
+        <li class="nav_link pro_zoom"><a href="{% url 'users:signup' %}">JOIN</a></li>
     {% endif %}
 </ul>

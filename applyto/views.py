@@ -66,6 +66,8 @@ def toggle_applyto(request, pk):
                 ) = participant_models.Participant.objects.get_or_create(
                     user=the_apply.apply_user, project=the_apply.project
                 )
+                the_participant.user = the_apply.apply_user
+                the_participant.save()
                 models.Apply.objects.filter(pk=the_apply.pk).delete()
                 messages.success(request, "참여신청을 수락하였습니다")
             return redirect(reverse("users:profile", kwargs={"pk": request.user.pk}))
