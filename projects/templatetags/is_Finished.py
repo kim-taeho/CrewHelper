@@ -4,8 +4,8 @@ register = template.Library()
 
 
 @register.simple_tag(takes_context=True)
-def on_mar(context, project):
-    if project.on_market is True:
+def is_Finished(context, project_job):
+    if project_job.isFinished is True:
         return True
     else:
         return False

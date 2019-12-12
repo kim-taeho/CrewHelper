@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, FormView, View
 from django.contrib import messages
+from django.utils import timezone
 from django.core.paginator import Paginator
 from users import mixins as user_mixins
 from participant import models as participant_models
@@ -69,7 +70,7 @@ class ProjectMemberDetail(user_mixins.LoggedInOnlyView, View):
         project_job = models.ProjectJob.objects.filter(project=project)
         participants = participant_models.Participant.objects.filter(project=project)
         form = forms.CreateProjectJobForm()
-        return render(
+        return render( 
             self.request,
             "projects/member_project.html",
             {
@@ -79,6 +80,17 @@ class ProjectMemberDetail(user_mixins.LoggedInOnlyView, View):
                 "form": form,
             },
         )
+
+
+def make_Finish(request, pk):
+    the_projectJob = models.ProjectJob.objects.get_or_none(pk=pk)
+    the_project = the_projectJob.project
+    if the_projectJob.isFinished is False:
+        the_projectJob.isFinished = True
+        the_projectJob.save()
+        messages.success(request, "업무를 종료했습니다")
+    now = now = timezone.now().date()
+    return redirect(reverse("projects:member-detail", kwargs={"pk": the_project.pk}))
 
 
 def create_job(request, project_pk):

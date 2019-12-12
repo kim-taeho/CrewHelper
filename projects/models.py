@@ -65,6 +65,8 @@ class ProjectJob(core_models.TimeStampedModel):
 
     name = models.CharField(max_length=140)
     start = models.DateField()
+    isFinished = models.BooleanField(default=False)
+    howLate = models.IntegerField(default=0)
     due = models.DateField()
     charger = models.ForeignKey(
         "users.User", related_name="project_jobs", on_delete=models.SET_NULL, null=True
@@ -77,6 +79,9 @@ class ProjectJob(core_models.TimeStampedModel):
         return self.name
 
     def is_finished(self):
-        now = timezone.now().date()
-        is_finished = now >= self.due
-        return is_finished
+        # now = timezone.now().date()
+        if(self.isFinished is True):
+            self.isFinished = False
+        else:
+            self.isFinished = True
+        return self.isFinished

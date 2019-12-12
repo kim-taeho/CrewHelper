@@ -21,7 +21,10 @@ class ProjectJobAdmin(admin.ModelAdmin):
     """ Project Job Admin Definition """
 
     fieldsets = (
-        ("Basic Info", {"fields": ("name", "start", "due", "charger", "project",)},),
+        (
+            "Basic Info",
+            {"fields": ("name", "start", "due", "charger", "project", "isFinished", "howLate",)},
+        ),
     )
 
     list_display = (
@@ -30,7 +33,8 @@ class ProjectJobAdmin(admin.ModelAdmin):
         "start",
         "due",
         "charger",
-        "is_finished",
+        "isFinished",
+        "howLate",
     )
 
     raw_id_fields = (
