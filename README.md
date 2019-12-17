@@ -23,3 +23,5 @@ python manage.py runserver
 - 조장에 의해 수락되어 참가 및 메세지 전송
 ![](demo/acceptApply.gif)
 - 조원 업무별 기한 및 기여도 평가
+![](demo/Job.gif)
+![](demo/evaluation.png)
