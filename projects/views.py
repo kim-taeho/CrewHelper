@@ -89,7 +89,7 @@ def make_Finish(request, pk):
         the_projectJob.isFinished = True
         the_projectJob.save()
         messages.success(request, "업무를 종료했습니다")
-    now = now = timezone.now().date()
+    # now = timezone.now().date()
     return redirect(reverse("projects:member-detail", kwargs={"pk": the_project.pk}))
 
 
