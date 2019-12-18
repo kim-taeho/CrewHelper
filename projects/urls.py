@@ -15,5 +15,6 @@ urlpatterns = [
     path("toggle/<int:pk>/", views.toggle_market, name="toggle"),
     path("all/", views.AllMarketProjectView.as_view(), name="all"),
     path("search/", views.SearchView.as_view(), name="search"),
-    path("finish/<int:pk>/", views.make_Finish, name="finish")
+    path("finish/<int:pk>/", views.make_Finish, name="finish"),
+    path("addMyJob/<int:user_pk>/<int:job_pk>/", views.add_myJob, name="addMyJob")
 ]

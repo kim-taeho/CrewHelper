@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.core.paginator import Paginator
 from users import mixins as user_mixins
 from participant import models as participant_models
+from users import models as user_models
 from . import forms
 from . import models
 from . import forms
@@ -87,11 +88,22 @@ def make_Finish(request, pk):
     the_project = the_projectJob.project
     if the_projectJob.isFinished is False:
         the_projectJob.isFinished = True
+        the_projectJob.howLate = (-1)*(the_projectJob.due - the_projectJob.start).days
         the_projectJob.save()
         messages.success(request, "업무를 종료했습니다")
     # now = timezone.now().date()
     return redirect(reverse("projects:member-detail", kwargs={"pk": the_project.pk}))
 
+
+def add_myJob(request, user_pk, job_pk):
+    the_projectJob = models.ProjectJob.objects.get_or_none(pk=job_pk)
+    the_user = user_models.User.objects.get_or_none(pk=user_pk)
+    the_project = the_projectJob.project
+    the_projectJob.charger = the_user
+    the_projectJob.charger_true = True
+    the_projectJob.save()
+    messages.success(request, "나의 담당업무로 지정했습니다")
+    return redirect(reverse("projects:member-detail", kwargs={"pk": the_project.pk}))
 
 def create_job(request, project_pk):
     if request.method == "POST":

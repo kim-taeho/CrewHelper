@@ -66,14 +66,15 @@ class ProjectJob(core_models.TimeStampedModel):
     name = models.CharField(max_length=140)
     start = models.DateField()
     isFinished = models.BooleanField(default=False)
-    howLate = models.IntegerField(default=0)
+    howLate = models.IntegerField()
     due = models.DateField()
     charger = models.ForeignKey(
-        "users.User", related_name="project_jobs", on_delete=models.SET_NULL, null=True
+        "users.User", related_name="project_jobs", on_delete=models.SET_NULL, null=True,
     )
     project = models.ForeignKey(
         "Project", related_name="project_jobs", on_delete=models.CASCADE
     )
+    charger_true = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

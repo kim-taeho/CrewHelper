@@ -72,10 +72,15 @@
             {% if job_finished %}
                 <li class="mb-2 list-none ml-4 mb-6 border border-blue-600 rounded-lg w-full p-2">
                     <div class="mb-1 text-lg"><i class="text-blue-600 fas fa-check-circle mr-2"></i>{{j.name}}</div>
+                    {% if  j.charger_true is not False %}
                     <span class="mr-3"><i class="fas fa-user-check mr-2 ml-2 text-pink-400"></i>{{j.charger.first_name}}{{j.charger.last_name}}</span>
+                    {% else %}
+                    <span class="mr-3"><i class="fas fa-user-check mr-2 ml-2 text-red-600"></i>담당자 없음</span>
+                    <a href="{% url 'projects:addMyJob' user.pk j.pk %}" class="mb-1 mr-2"><i class="text-red-600 fas fa-check-circle mr-2"></i>내 업무로 지정</a>
+                    {% endif %}
                     <span><i class="fas fa-calendar-day mr-2"></i>{{j.start}} ~ {{j.due}}</span>
                     {% if j.howLate > 0 %}
-                        <span><i class="fab fa-font-awesome-flag text-xl text-red-500 mx-1"></i>{{j.howLate}}</span>
+                        <span class="text-sm"><i class="fab fa-font-awesome-flag text-xl text-red-500 mx-1"></i>기한초과 : {{j.howLate}}일</span>
                     {% else %}
                         <span class="text-sm"><i class="fab fa-font-awesome-flag text-lg mx-1 text-blue-500"></i>기한내 제출</span>
                     {% endif %}
@@ -83,12 +88,19 @@
             {% else %}
                 <li class="mb-2 list-none ml-4 mb-6 border border-gray-600 rounded-lg w-full p-2">
                     <div class="mb-1 text-lg"><i class="fas fa-check-circle mr-2"></i>{{j.name}}</div>
+                    {% if  j.charger_true is not False %}
                     <span class="mr-3"><i class="fas fa-user-check mr-2 ml-2 text-pink-400"></i>{{j.charger.first_name}}{{j.charger.last_name}}</span>
+                    {% else %}
+                    <span class="mr-3"><i class="fas fa-user-check mr-2 ml-2 text-pink-400"></i>담당자 없음</span>
+                    <a href="{% url 'projects:addMyJob' user.pk j.pk %}" class="mb-1 mr-2"><i class="text-red-600 fas fa-check-circle mr-2"></i>내 업무로 지정</a>
+                    {% endif %}
                     <span><i class="fas fa-calendar-day mr-2"></i>{{j.start}} ~ {{j.due}}</span>
                     <a class="" href="{% url 'projects:finish' j.pk %}"><i class="far fa-stop-circle text-xl ml-2 text-red-500"></i></a>
                 </li>
             {% endif %}
             {% endfor %} 
+
+            <h4 class="font-medium text-xl mb-5 w-15 mr-2">기여도</h4>
         </div>
 
     </div>
