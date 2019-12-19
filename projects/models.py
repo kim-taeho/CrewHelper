@@ -63,10 +63,23 @@ class ProjectJob(core_models.TimeStampedModel):
 
     """ Job Model Definition """
 
+    LOW = 1
+    MIDDLELOW = 2
+    MIDDLE = 3
+    MIDDLEHIGH = 4
+    HIGH = 5
+
+    IMPORTANCE_CHOICES = (
+        (LOW, 1),
+        (MIDDLELOW, 2),
+        (MIDDLE, 3),
+        (MIDDLEHIGH, 4),
+        (HIGH, 5),
+    )
     name = models.CharField(max_length=140)
     start = models.DateField()
     isFinished = models.BooleanField(default=False)
-    howLate = models.IntegerField()
+    howLate = models.IntegerField(default=0, null=True)
     due = models.DateField()
     charger = models.ForeignKey(
         "users.User", related_name="project_jobs", on_delete=models.SET_NULL, null=True,
@@ -75,6 +88,7 @@ class ProjectJob(core_models.TimeStampedModel):
         "Project", related_name="project_jobs", on_delete=models.CASCADE
     )
     charger_true = models.BooleanField(default=False)
+    importance = models.IntegerField(choices=IMPORTANCE_CHOICES, default=LOW)
 
     def __str__(self):
         return self.name
@@ -86,3 +100,19 @@ class ProjectJob(core_models.TimeStampedModel):
         else:
             self.isFinished = True
         return self.isFinished
+
+
+class JobContribution(core_models.TimeStampedModel): 
+
+    """ Job Contribution Model Definition """
+
+    inProject = models.ForeignKey(
+        "Project", related_name="job_contribution", on_delete=models.CASCADE
+    )
+    inProjectJob = models.ForeignKey(
+        "ProjectJob", related_name="job_contribution", on_delete=models.CASCADE, null=True
+    )
+    inCharge = models.ForeignKey(
+        "users.User", related_name="job_contribution", on_delete=models.CASCADE, null=True
+    )
+    score = models.FloatField(default=0)

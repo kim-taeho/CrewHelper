@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.admin import widgets
 from . import models
 
 
@@ -27,7 +28,13 @@ class CreateProjectJobForm(forms.ModelForm):
             "name",
             "start",
             "due",
+            "importance",
         )
+
+    """ def __init__(self, *args, **kwargs):
+        super(CreateProjectJobForm, self).__init__(*args, **kwargs)
+        self.fields['start'].widget = widgets.AdminDateWidget()
+        self.fields['due'].widget = widgets.AdminTimeWidget() """
 
     def save(self):
         projectjob = super().save(commit=False)

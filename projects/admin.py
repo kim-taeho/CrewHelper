@@ -23,7 +23,18 @@ class ProjectJobAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "start", "due", "charger", "project", "isFinished", "howLate",)},
+            {
+                "fields": (
+                    "name",
+                    "start",
+                    "due",
+                    "charger",
+                    "project",
+                    "isFinished",
+                    "howLate",
+                    "importance",
+                )
+            },
         ),
     )
 
@@ -66,3 +77,13 @@ class ProjectAdmin(admin.ModelAdmin):
     raw_id_fields = ("host",)
 
     filter_horizontal = ("categories",)
+
+
+@admin.register(models.JobContribution)
+class JobContribution(admin.ModelAdmin):
+
+    """ Job Contribution Admin Def."""
+
+    fieldsets = (
+        ("Basic Info", {"fields": ("inProject", "inProjectJob", "inCharge","score",)},),
+    )

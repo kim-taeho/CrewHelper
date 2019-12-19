@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, FormView, View
 from django.contrib import messages
+from django.db.models import Q
 from django.utils import timezone
 from django.core.paginator import Paginator
 from users import mixins as user_mixins
@@ -70,6 +71,7 @@ class ProjectMemberDetail(user_mixins.LoggedInOnlyView, View):
             raise Http404()
         project_job = models.ProjectJob.objects.filter(project=project)
         participants = participant_models.Participant.objects.filter(project=project)
+        jobContribution = models.JobContribution.objects.filter(inProject=project)
         form = forms.CreateProjectJobForm()
         return render( 
             self.request,
@@ -78,6 +80,7 @@ class ProjectMemberDetail(user_mixins.LoggedInOnlyView, View):
                 "project": project,
                 "participants": participants,
                 "project_job": project_job,
+                "job_contribution": jobContribution,
                 "form": form,
             },
         )
@@ -89,6 +92,11 @@ def make_Finish(request, pk):
     if the_projectJob.isFinished is False:
         the_projectJob.isFinished = True
         the_projectJob.howLate = (-1)*(the_projectJob.due - the_projectJob.start).days
+        jobCont = models.JobContribution.objects.get(
+            Q(inProjectJob=the_projectJob.pk) & Q(inProject=the_project.pk)
+        )
+        jobCont.score = (the_projectJob.importance) - (the_projectJob.howLate)
+        jobCont.save()
         the_projectJob.save()
         messages.success(request, "업무를 종료했습니다")
     # now = timezone.now().date()
@@ -102,8 +110,12 @@ def add_myJob(request, user_pk, job_pk):
     the_projectJob.charger = the_user
     the_projectJob.charger_true = True
     the_projectJob.save()
+    jobCont = models.JobContribution.objects.get_or_none(inProjectJob=the_projectJob.pk)
+    jobCont.inCharge = the_user
+    jobCont.save()
     messages.success(request, "나의 담당업무로 지정했습니다")
     return redirect(reverse("projects:member-detail", kwargs={"pk": the_project.pk}))
+
 
 def create_job(request, project_pk):
     if request.method == "POST":
@@ -116,6 +128,10 @@ def create_job(request, project_pk):
             job.charger = request.user
             job.project = project
             job.save()
+            the_cont, created = models.JobContribution.objects.get_or_create(
+                inProject=project, inProjectJob=job
+            )
+            the_cont.save()
             messages.success(request, "업무가 생성되었습니다")
             return redirect(
                 reverse("projects:member-detail", kwargs={"pk": project_pk})
